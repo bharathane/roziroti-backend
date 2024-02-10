@@ -7,6 +7,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const dbPath = path.join(__dirname, 'moneyTracker.db')
 const app = express()
+app.use(cors())
 app.use(express.json())
 
 let db
