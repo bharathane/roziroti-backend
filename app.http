@@ -1,0 +1,37 @@
+POST http://localhost:3000/register/
+Content-Type: application/json
+
+ {
+    "username":"padmaja",
+    "name":"padmaja manda",
+    "gender":"male",
+    "password":"padmaja@123",
+    "balance":100000
+ }
+
+ ###
+ POST http://localhost:3000/login
+ Content-Type: application/json
+
+  {
+    "username":"padmaja",
+    "password":"padmaja@123"
+  }
+
+ ####
+POST http://localhost:3000/postData
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhZG1hamEiLCJpYXQiOjE3MDc1NjM5OTN9.V4HtJBDneNNljor7f9-RPDImg4pxyJe2hwU8f_VzskY
+
+  {
+      "category":"shopping",
+      "type":"expenses",
+      "amount":5000,
+      "transactionDate":"2024-2-12"
+    }
+
+
+###
+
+GET http://localhost:3000/getData
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhZG1hamEiLCJpYXQiOjE3MDc1NjM5OTN9.V4HtJBDneNNljor7f9-RPDImg4pxyJe2hwU8f_VzskY
