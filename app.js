@@ -55,6 +55,11 @@ const authenticateToken = (req, res, next) => {
   }
 }
 
+//sample
+app.get('/', (req, res) => {
+  res.send('hello world')
+})
+
 //creating a user in database
 app.post('/register/', async (req, res) => {
   try {
