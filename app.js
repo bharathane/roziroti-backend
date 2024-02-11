@@ -7,14 +7,8 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const dbPath = path.join(__dirname, 'moneyTracker.db')
 const app = express()
-const corsOptions = {
-  origin: 'http://localhost:3000', // Specify the allowed origin
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true, // Enable cookies and credentials
-  optionsSuccessStatus: 204, // Respond with 204 No Content for preflight requests
-}
 
-app.use(cors(corsOptions))
+app.use(cors())
 app.use(express.json())
 
 let db
