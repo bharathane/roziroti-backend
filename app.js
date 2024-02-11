@@ -40,13 +40,13 @@ const authenticateToken = (req, res, next) => {
   if (jwtToken === undefined) {
     // Token not provided
     res.status(401)
-    res.send('Invalid JWT Token')
+    res.send({errorMessage: 'Invalid JWT Token'})
   } else {
     jwt.verify(jwtToken, 'MY_SECRET_TOKEN', async (error, payload) => {
       if (error) {
         // Incorrect token
         res.status(401)
-        res.send('Invalid JWT Token')
+        res.send({errorMessage: 'Invalid JWT Token'})
       } else {
         req.username = payload.username // Pass data to the next handler with req obj
 
@@ -58,7 +58,7 @@ const authenticateToken = (req, res, next) => {
 
 //sample
 app.get('/', (req, res) => {
-  res.send('hello world')
+  res.send('Hello World')
 })
 
 //creating a user in database
@@ -72,18 +72,21 @@ app.post('/register/', async (req, res) => {
     if (checkIsUserExits !== undefined) {
       //if user exits this block will excutes
       res.status(400)
-      res.send('user is already exits')
+      res.send({errorMessage: 'user is already exits'})
     } else {
       if (password.length < 6) {
         res.status(401)
-        res.send('password is too short please enter atleast 6 charecters')
+        res.send({
+          errorMessage:
+            'password is too short please enter atleast 6 charecters',
+        })
       } else {
         //if user is a new user
         const postQuery = `insert into user(username,name,gender,password,balance)
   values("${username}","${name}","${gender}","${hashedPassword}",${balance})`
 
         await db.run(postQuery)
-        res.send('user created successfully')
+        res.send({errorMessage: 'user created successfully'})
       }
     }
   } catch (error) {
@@ -99,7 +102,7 @@ app.post('/login/', async (req, res) => {
   if (dbUser === undefined) {
     // If user doesn't have account
     res.status(400)
-    res.send('Invalid user')
+    res.send({errorMessage: 'Invalid user'})
   } else {
     // If user has an A/C
     const isPasswordMatched = await bcrypt.compare(password, dbUser.password)
@@ -113,7 +116,7 @@ app.post('/login/', async (req, res) => {
     } else {
       // Incorrect pw
       res.status(400)
-      res.send('Invalid password')
+      res.send({errorMessage: 'Invalid user'})
     }
   }
 })
@@ -126,9 +129,7 @@ app.post('/postData/', authenticateToken, async (req, res) => {
     const sqlQuery = `insert into userTransactions(username,category,type,amount,transactionDate)
   values ('${req.username}','${category}','${type}',${amount},'${transactionDate}')`
     await db.run(sqlQuery)
-    const getData = `select * from userTransactions`
-    const dbRes = await db.all(getData)
-    res.send(dbRes)
+    res.send({message: 'transaction add successfully'})
   } catch (error) {
     console.log(error.message)
   }
